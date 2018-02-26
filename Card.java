@@ -7,21 +7,21 @@ public class Card {
 
 	private char value;
 	private Suit suit;
-	private boolean errorFlag;
+	private boolean errorFlag = false;
 	// >add constants for the default value 'A' and default suit Card.Suit.spades
-	static final char defaultValue ='A';
-	static final Suit defaultSuit = Card.Suit.spades;
+	static final char DEFAULT_VALUE = 'A';
+	static final Suit DEFAULT_SUIT = Card.Suit.spades;
 
 	// 3 constructors with no parameters, all parameters, and a copy constructor
 	// (with signature public Card(Card card))
 	public Card() {
 
 		// >Use my constants in here
-		//		this.value = 'A';
-		//this.suit = Suit.spades;
-		this.value = defaultValue;
-		this.suit = defaultSuit;
-		
+		// this.value = 'A';
+		// this.suit = Suit.spades;
+		this.value = DEFAULT_VALUE;
+		this.suit = DEFAULT_SUIT;
+
 	}
 
 	public Card(char value, Suit suit) {
@@ -34,7 +34,6 @@ public class Card {
 		// >also set the errorFlag member variable
 		this.errorFlag = card.errorFlag;
 	}
-
 
 	// mutator
 	public boolean set(char value, Suit suit) {
@@ -52,9 +51,8 @@ public class Card {
 			this.value = upVal;
 		} else {
 			errorFlag = true;
-			return errorFlag;	
 		}
-		//errorFlag = this.isValid(this.value, this.suit);
+		// errorFlag = this.isValid(this.value, this.suit);
 		return errorFlag;
 	}
 
@@ -73,24 +71,14 @@ public class Card {
 
 	// boolean equals(Card card) returns true if all the fields (members) are
 	// identical
-	// >must check errorFlag too
+	// >must check errorFlag too & just use accessors to see if values, suits and
+	// errorFlags are the same in both "card" and "this".
 	public boolean equals(Card card) {
-		if (card.set(card.getValue(), card.getSuit())==false)
-		{	
-			if (card.value == this.getValue() && card.suit == this.getSuit())
-			{	
-				card.toString();
-				return true;
-			}
-			else
-				return false;
-		}
-		else {
-			card.toString();
-		
+		if (card.getValue() == this.getValue() && card.getSuit() == this.getSuit() && card.isErrorFlag() == this.isErrorFlag()) {
+			return true;
+		} else
 			return false;
-		}
-		
+	
 	}
 
 	// stringizer
@@ -100,21 +88,21 @@ public class Card {
 
 		if (errorFlag == true)
 			return invalid;
-		// >No need to explicitly convert the char to a String, concatenating it with " of " will do that.
-		//retVal = String.valueOf(value) + " of " + suit;
+		// >No need to explicitly convert the char to a String, concatenating it with "
+		// of " will do that.
+		// retVal = String.valueOf(value) + " of " + suit;
 		retVal = value + " of " + suit;
 		return retVal;
 	}
 
-
-	// a static helper method that returns true or false, depending on the legality of the parameters.
+	// a static helper method that returns true or false, depending on the legality
+	// of the parameters.
 	// >always use curly brackets for ALL of your loops, if, and if-else statements
 	static boolean isValid(char value, Suit suit) {
-		if (value == 'A' || value == 'K' || value == 'Q' || value == 'J' || value == 'T' || (value >= '2' && value <= '9'))
-		{
+		if (value == 'A' || value == 'K' || value == 'Q' || value == 'J' || value == 'T'
+				|| (value >= '2' && value <= '9')) {
 			return true;
-		}
-		else
+		} else
 			return false;
 	}
 }
