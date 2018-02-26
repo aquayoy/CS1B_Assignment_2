@@ -1,0 +1,696 @@
+Exercise: Assignment 2 - Adding a Deck
+/** CS1B_Assignment_2_Group 10
+ * Creeger, Adam/ Kishore, Nand/ Lo, YaFan
+ */
+import java.util.Scanner;
+
+public class Foothill {
+
+	public static void main(String[] args) {
+		/*
+		 * A newly instantiated deck will have a multiple of 52 cards and will contain
+		 * all the standard cards, so the number of cards in a newly instantiated deck
+		 * will be 52, 104, 156, ... (numPacks × 52).
+		 */
+		System.out.println("---------------PHASE 1-----------------");
+		System.out.println("An unshffled deck containing two packs of cards:");
+		Deck deck = new Deck(2);
+		System.out.println("top Card = " + deck.getTopCard() + "\n\nDeal the cards:");
+		int totalCards = deck.getTopCard();
+		for (int i = 0; i < totalCards; i++)
+			System.out.println(deck.dealCard().toString());
+
+		System.out.println(
+				"Next, reset the deck (2 packs) by initializing it again and shuffle the deck. Re-deal to the screen:");
+
+		Deck deckShuffled = new Deck(2);
+		System.out.println("top Card = " + deckShuffled.getTopCard());
+
+		deckShuffled.init(2);
+		deckShuffled.shuffle();
+		Card shuffledCard;
+		String strShuffledCards = "";
+		for (int i = 0; i < deckShuffled.getTopCard(); i++) {
+			shuffledCard = new Card(deckShuffled.inspectCard(i));
+			strShuffledCards = strShuffledCards + shuffledCard.toString() + " \n";
+		}
+		System.out.print("Shuffle two  packs of cards and deal the cards:\n" + strShuffledCards);
+
+		System.out.println("\n\nAn unshffled deck containing one pack of cards:");
+		Deck deck1 = new Deck();
+		totalCards = deck1.getTopCard();
+		System.out.println("top Card = " + deck1.getTopCard() + "\nDeal the cards:");
+		for (int i = 0; i < totalCards; i++)
+			System.out.println(deck1.dealCard().toString());
+
+		System.out.println(
+				"Next, reset the deck (one pack) by initializing it again and shuffle the deck. Re-deal to the screen:");
+
+		Deck deckShuffled1 = new Deck(1);
+		System.out.println("top Card = " + deckShuffled1.getTopCard());
+
+		deckShuffled1.init(1);
+		deckShuffled1.shuffle();
+		Card shuffledCard1;
+		String strShuffledCards1 = "";
+		for (int i = 0; i < deckShuffled.getTopCard(); i++) {
+			shuffledCard1 = new Card(deckShuffled.inspectCard(i));
+			strShuffledCards1 = strShuffledCards1 + shuffledCard1.toString() + " \n";
+		}
+		System.out.print("Shuffle one pack of cards and deal the cards:\n" + strShuffledCards1);
+
+		System.out.println("\n\n\n---------------PHASE 2-----------------");
+		System.out.println("Please select the number of players. A number from 1 to 10 :");
+		Scanner keyboard = new Scanner(System.in);
+		int choice = 0;
+		if (keyboard.hasNextInt()) {
+			choice = keyboard.nextInt();
+			if (choice > 10 || choice < 1) {
+				System.out.println("***illegal number***");
+
+				choice = 0;
+			} else
+				System.out.println("You've selected " + choice + " players");
+		} else
+			System.out.println("***illegal input***");
+		// instantiate a single-pack Deck object without shuffling
+		System.out.println("\nHere are our hands, from unshuffled deck:");
+		Deck deckOnePack = new Deck();
+		deckOnePack.init(1);
+		System.out.println("card 3 = " + deckOnePack.inspectCard(2));
+
+		int topCard = deckOnePack.getTopCard();
+		System.out.println("The topCard = " + deckOnePack.getTopCard());
+
+		// deal a deck into that many Hand objects, dealing all cards until the deck is
+		// empty.
+		Hand[] hand = new Hand[choice];
+
+		String cardsInHand1 = "";
+		String cardsInHand2 = "";
+		String cardsInHand3 = "";
+		String cardsInHand4 = "";
+		String cardsInHand5 = "";
+		String cardsInHand6 = "";
+		String cardsInHand7 = "";
+		String cardsInHand8 = "";
+		String cardsInHand9 = "";
+		String cardsInHand10 = "";
+
+		int position = topCard;
+		int n;
+		// player 1 n=1
+		for (int factor = 0; choice >= 1 && factor <= topCard / choice && position - choice >= 1; factor++) {
+			n = 1;
+			position = topCard - (choice * factor) - (n - 1);
+			if (factor == topCard / choice && position - choice > topCard) {
+				// System.out.println("I'm in position= "+position);
+
+				cardsInHand1 = cardsInHand1 + deckOnePack.inspectCard(position - 1);
+			}
+
+			// System.out.println("topCard/choice = "+topCard/choice);
+			//
+			// System.out.println("position = "+ position);
+			// System.out.println("choice*factor = "+choice*factor);
+
+			Card cardReceived = new Card(deckOnePack.inspectCard(position - 1));
+			cardsInHand1 = cardsInHand1 + cardReceived + "; ";
+
+		}
+
+		System.out.println("hand = ( " + cardsInHand1 + ")");
+
+		// player2 n=2
+		position = topCard - 1;
+		for (int factor = 0; choice >= 2 && factor <= topCard / choice && position - choice >= 1; factor++) {
+			n = 2;
+			position = topCard - (choice * factor) - (n - 1);
+
+			if (factor == topCard / choice && position - choice > topCard) {
+
+				cardsInHand2 = cardsInHand2 + deckOnePack.inspectCard(position - 1);
+			}
+
+			else {
+				Card cardReceived = new Card(deckOnePack.inspectCard(position - 1));
+				cardsInHand2 = cardsInHand2 + cardReceived + "; ";
+			}
+		}
+
+		System.out.println("hand = ( " + cardsInHand2 + ")");
+
+		// player3 n=3
+		position = topCard - 2;
+		for (int factor = 0; choice >= 3 && factor <= topCard / choice && position - choice >= 1; factor++) {
+			n = 3;
+			position = topCard - (choice * factor) - (n - 1);
+
+			if (factor == topCard / choice && position - choice > topCard) {
+
+				cardsInHand3 = cardsInHand3 + deckOnePack.inspectCard(position - 1);
+			}
+
+			else {
+				Card cardReceived = new Card(deckOnePack.inspectCard(position - 1));
+				cardsInHand3 = cardsInHand3 + cardReceived + "; ";
+			}
+		}
+
+		System.out.println("hand = ( " + cardsInHand3 + ")");
+
+		// player4 n=4
+		position = topCard - 3;
+		for (int factor = 0; choice >= 4 && factor <= topCard / choice && position - choice >= 1; factor++) {
+			n = 4;
+			position = topCard - (choice * factor) - (n - 1);
+
+			if (factor == topCard / choice && position - choice > topCard) {
+
+				cardsInHand4 = cardsInHand4 + deckOnePack.inspectCard(position - 1);
+			}
+
+			else {
+				Card cardReceived = new Card(deckOnePack.inspectCard(position - 1));
+				cardsInHand4 = cardsInHand4 + cardReceived + "; ";
+			}
+		}
+
+		System.out.println("hand = ( " + cardsInHand4 + ")");
+
+		// player5 n=5
+		position = topCard - 4;
+		for (int factor = 0; choice >= 5 && factor <= topCard / choice && position - choice >= 1; factor++) {
+			n = 5;
+			position = topCard - (choice * factor) - (n - 1);
+
+			if (factor == topCard / choice && position - choice > topCard) {
+
+				cardsInHand5 = cardsInHand5 + deckOnePack.inspectCard(position - 1);
+			}
+
+			else {
+				Card cardReceived = new Card(deckOnePack.inspectCard(position - 1));
+				cardsInHand5 = cardsInHand5 + cardReceived + "; ";
+			}
+		}
+
+		System.out.println("hand = ( " + cardsInHand5 + ")");
+
+		// player6 n=6
+		position = topCard - 5;
+		for (int factor = 0; choice >= 6 && factor <= topCard / choice && position - choice >= 1; factor++) {
+			n = 6;
+			position = topCard - (choice * factor) - (n - 1);
+
+			if (factor == topCard / choice && position - choice > topCard) {
+
+				cardsInHand6 = cardsInHand6 + deckOnePack.inspectCard(position - 1);
+			}
+
+			else {
+				Card cardReceived = new Card(deckOnePack.inspectCard(position - 1));
+				cardsInHand6 = cardsInHand6 + cardReceived + "; ";
+			}
+		}
+
+		System.out.println("hand = ( " + cardsInHand6 + ")");
+
+		// player7 n=7
+		position = topCard - 6;
+		for (int factor = 0; choice >= 7 && factor <= topCard / choice && position - choice >= 1; factor++) {
+			n = 7;
+			position = topCard - (choice * factor) - (n - 1);
+
+			if (factor == topCard / choice && position - choice > topCard) {
+
+				cardsInHand7 = cardsInHand7 + deckOnePack.inspectCard(position - 1);
+			}
+
+			else {
+				Card cardReceived = new Card(deckOnePack.inspectCard(position - 1));
+				cardsInHand7 = cardsInHand7 + cardReceived + "; ";
+			}
+		}
+
+		System.out.println("hand = ( " + cardsInHand7 + ")");
+
+		// player8 n=8
+		position = topCard - 7;
+		for (int factor = 0; choice >= 8 && factor <= topCard / choice && position - choice >= 1; factor++) {
+			n = 8;
+			position = topCard - (choice * factor) - (n - 1);
+
+			if (factor == topCard / choice && position - choice > topCard) {
+
+				cardsInHand8 = cardsInHand8 + deckOnePack.inspectCard(position - 1);
+			}
+
+			else {
+				Card cardReceived = new Card(deckOnePack.inspectCard(position - 1));
+				cardsInHand8 = cardsInHand8 + cardReceived + "; ";
+			}
+		}
+
+		System.out.println("hand = ( " + cardsInHand8 + ")");
+
+		// player9 n=9
+		position = topCard - 8;
+		for (int factor = 0; choice >= 9 && factor <= topCard / choice && position - choice >= 1; factor++) {
+			n = 8;
+			position = topCard - (choice * factor) - (n - 1);
+
+			if (factor == topCard / choice && position - choice > topCard) {
+
+				cardsInHand9 = cardsInHand9 + deckOnePack.inspectCard(position - 1);
+			}
+
+			else {
+				Card cardReceived = new Card(deckOnePack.inspectCard(position - 1));
+				cardsInHand9 = cardsInHand9 + cardReceived + "; ";
+			}
+		}
+
+		System.out.println("hand = ( " + cardsInHand9 + ")");
+
+		// player10 n=10
+		position = topCard - 9;
+		for (int factor = 0; choice >= 10 && factor <= topCard / choice && position - choice >= 1; factor++) {
+			n = 10;
+			position = topCard - (choice * factor) - (n - 1);
+
+			if (factor == topCard / choice && position - choice > topCard) {
+
+				cardsInHand10 = cardsInHand10 + deckOnePack.inspectCard(position - 1);
+			}
+
+			else {
+				Card cardReceived = new Card(deckOnePack.inspectCard(position - 1));
+				cardsInHand10 = cardsInHand10 + cardReceived + "; ";
+			}
+		}
+
+		System.out.println("hand = ( " + cardsInHand10 + ")");
+
+	}
+
+}
+import java.util.Random;
+
+public class Deck {
+	// Private Static Class Constants
+	private static final int MAX_PACKS = 6, NUM_CARDS_PER_PACK = 52,
+			MAX_CARDS_PER_DECK = MAX_PACKS * NUM_CARDS_PER_PACK;
+
+	// private instance variables
+
+	// private static member, Card array , containing exactly 52 card references,
+	// which point to all the standard cards
+	private static Card[] masterPack;
+
+	// Private Member Data
+	private Card[] cards;
+	private int topCard, numPacks, numCards;
+
+	// Public Methods
+	// a constructor that populates the arrays and assigns initial values to
+	// members.
+	public Deck(int numPacks) {
+		this.numPacks = numPacks;
+		cards = new Card[numPacks * NUM_CARDS_PER_PACK];
+		numCards = numPacks * NUM_CARDS_PER_PACK;
+		topCard = numPacks * NUM_CARDS_PER_PACK;
+		for (int i = 1; i <= numPacks; i++)
+			Deck.allocateMasterPack();
+
+	}
+
+	public Deck() {
+		this.numPacks = 1;
+		cards = new Card[numPacks * NUM_CARDS_PER_PACK];
+		numCards = numPacks * NUM_CARDS_PER_PACK;
+		topCard = numPacks * NUM_CARDS_PER_PACK;
+		for (int i = 1; i <= numPacks; i++)
+			Deck.allocateMasterPack();
+	}
+
+	/*
+	 * helper, a private static methods, a method that will be called by the
+	 * constructor Since masterPack[] is a static, unchanging, entity, it need not
+	 * be built every time a new Deck is instantiated.
+	 */
+	private static void allocateMasterPack() {
+		// instantiate the array elements
+		masterPack = new Card[NUM_CARDS_PER_PACK];
+
+		char val;
+		Card.Suit suit;
+		int k;
+		for (k = 0; k < 4; k++) {
+			// set the suit for this loop pass
+			switch (k) {
+			case 0:
+				suit = Card.Suit.clubs;
+				masterPack[13 * k] = new Card('A', suit);
+				int j;
+				for (val = '2', j = 1; val <= '9'; val++, j++) {
+					masterPack[13 * k + j] = new Card(val, suit);
+
+					masterPack[13 * k + j].set(val, suit);
+				}
+				masterPack[13 * k + 9] = new Card(val, suit);
+				masterPack[13 * k + 9].set('T', suit);
+				masterPack[13 * k + 10] = new Card(val, suit);
+				masterPack[13 * k + 10].set('J', suit);
+				masterPack[13 * k + 11] = new Card(val, suit);
+				masterPack[13 * k + 11].set('Q', suit);
+				masterPack[13 * k + 12] = new Card(val, suit);
+				masterPack[13 * k + 12].set('K', suit);
+				break;
+			case 1:
+				suit = Card.Suit.diamonds;
+				masterPack[13 * k] = new Card('A', suit);
+
+				for (val = '2', j = 1; val <= '9'; val++, j++) {
+					masterPack[13 * k + j] = new Card(val, suit);
+
+					masterPack[13 * k + j].set(val, suit);
+				}
+				masterPack[13 * k + 9] = new Card(val, suit);
+				masterPack[13 * k + 9].set('T', suit);
+				masterPack[13 * k + 10] = new Card(val, suit);
+				masterPack[13 * k + 10].set('J', suit);
+				masterPack[13 * k + 11] = new Card(val, suit);
+				masterPack[13 * k + 11].set('Q', suit);
+				masterPack[13 * k + 12] = new Card(val, suit);
+				masterPack[13 * k + 12].set('K', suit);
+				break;
+			case 2:
+				suit = Card.Suit.hearts;
+				masterPack[13 * k] = new Card('A', suit);
+
+				for (val = '2', j = 1; val <= '9'; val++, j++) {
+					masterPack[13 * k + j] = new Card(val, suit);
+
+					masterPack[13 * k + j].set(val, suit);
+				}
+				masterPack[13 * k + 9] = new Card(val, suit);
+				masterPack[13 * k + 9].set('T', suit);
+				masterPack[13 * k + 10] = new Card(val, suit);
+				masterPack[13 * k + 10].set('J', suit);
+				masterPack[13 * k + 11] = new Card(val, suit);
+				masterPack[13 * k + 11].set('Q', suit);
+				masterPack[13 * k + 12] = new Card(val, suit);
+				masterPack[13 * k + 12].set('K', suit);
+				break;
+			case 3:
+				suit = Card.Suit.spades;
+				masterPack[13 * k] = new Card('A', suit);
+
+				for (val = '2', j = 1; val <= '9'; val++, j++) {
+					masterPack[13 * k + j] = new Card(val, suit);
+
+					masterPack[13 * k + j].set(val, suit);
+				}
+				masterPack[13 * k + 9] = new Card(val, suit);
+				masterPack[13 * k + 9].set('T', suit);
+				masterPack[13 * k + 10] = new Card(val, suit);
+				masterPack[13 * k + 10].set('J', suit);
+				masterPack[13 * k + 11] = new Card(val, suit);
+				masterPack[13 * k + 11].set('Q', suit);
+				masterPack[13 * k + 12] = new Card(val, suit);
+				masterPack[13 * k + 12].set('K', suit);
+				break;
+			}
+
+		}
+
+		for (int a = 0; a < 52; a++) {
+			System.out.println(masterPack[a].toString());
+		}
+
+		System.out.println(" ");
+
+	}
+
+	/*
+	 * re-populate cards[] with the standard 52 × numPacks cards to restock the deck
+	 * (init()) to the original full condition in preparation for a fresh deal
+	 */
+	public boolean init(int numPacks) {
+		if (numPacks <= MAX_PACKS) {
+			cards = new Card[numPacks * NUM_CARDS_PER_PACK];
+			for (int i = 1; i <= numPacks; i++) {
+				for (int j = 0 + (i - 1) * NUM_CARDS_PER_PACK; j < i * NUM_CARDS_PER_PACK; j++)
+					cards[j] = new Card(masterPack[NUM_CARDS_PER_PACK - (j % 52) - 1]);
+
+				// for (int j=NUM_CARDS_PER_PACK,k=0; j<numPacks* NUM_CARDS_PER_PACK ; j++)
+				// cards[j]= new Card(masterPack[NUM_CARDS_PER_PACK-1-k]);
+			}
+			return true;
+		}
+
+		else
+			return false;
+
+	}
+
+	/*
+	 * returns and removes (effectively, not physically) the card in the top
+	 * occupied position of cards[] (at the top of the deck). We have to return a
+	 * copy of the card, not the actual reference to the object in the cards[] array
+	 * since that object is also the object in the masterPack[] array, which the
+	 * client must not be allowed to change.
+	 */
+	public Card dealCard() {
+
+		Card cardDealt;
+		if (topCard > 0) {
+			if ((topCard % 52 == 0))
+				cards[topCard - 1] = new Card(masterPack[(NUM_CARDS_PER_PACK - 1)]);
+			else
+				cards[topCard - 1] = new Card(masterPack[(topCard % 52) - 1]);
+			cardDealt = cards[topCard - 1];
+			// String strCardDealt = cardDealt.toString();
+			// System.out.println(strCardDealt);
+			topCard--;
+			return cardDealt;
+		} else
+			cardDealt = new Card('0', Card.Suit.clubs);
+		boolean isIllegal = cardDealt.set('0', Card.Suit.clubs);
+		return cardDealt;
+	}
+
+	// An accessor for the int, topCard (no mutator.)
+	public int getTopCard() {
+		return topCard;
+	}
+
+	/*
+	 * Accessor for an individual card. Returns a card with errorFlag = true if k is
+	 * bad. Otherwise returns a copy of the card (see admonition for dealCard())
+	 */
+	public Card inspectCard(int k) {
+		Card cardTest = null;
+		if (k > topCard - 1) {
+			cardTest = new Card();
+			cardTest.set('0', Card.Suit.clubs);
+		} else
+			cardTest = new Card(cards[k].getValue(), cards[k].getSuit());
+
+		return cardTest;
+	}
+
+	// to re-order the cards in a random fashion
+	public void shuffle() {
+		// this.init(numPacks);
+		// Card shuffleClone = new Card();
+		Card shuffleClone;
+		Random random = new Random();
+		int r1, r2;
+		for (int i = 0; i < numCards; i++) {
+			r1 = random.nextInt(numCards - 1);
+			r2 = random.nextInt(numCards - 1);
+			shuffleClone = cards[r1];
+			cards[r1] = cards[r2];
+			cards[r2] = shuffleClone;
+		}
+	}
+
+}
+
+public class Hand {
+
+	public static final int MAX_CARDS = 30;
+	private Card[] myCards;
+	private int numCardsInHand;
+
+	// construtor
+	public Hand() {
+		this.myCards = new Card[MAX_CARDS];
+		this.numCardsInHand = 0;
+	}
+
+	// remove all cards from the hand
+	public void resetHand() {
+		this.numCardsInHand = 0;
+		
+	}
+
+	public boolean takeCard(Card card) {
+		if (numCardsInHand < MAX_CARDS) 
+		{
+			numCardsInHand++;
+//			myCards[numCardsInHand - 1] = card;
+			 myCards[numCardsInHand - 1] = new Card(card);
+
+			return true;
+		} 
+		else
+			return false;
+
+	}
+
+	// returns and removes the card in the top occupied position of the array
+	public Card playCard() {
+		if (numCardsInHand==0)
+		{	
+			Card cardTest=new Card();
+			cardTest.set('0', Card.Suit.clubs);
+			
+			return cardTest;
+		}
+		int cardplayed = numCardsInHand - 1;
+		numCardsInHand--;
+	
+		return myCards[cardplayed];
+
+	}
+
+	public String toString() {
+		String returnVal;
+		if (numCardsInHand==0)
+			return " ";
+		int i=0;
+		returnVal = myCards[i].toString()+",";
+		for (i=1;i<numCardsInHand;i++) 
+		{ 
+			returnVal = returnVal +myCards[i].toString()+",";
+		}
+		
+		return returnVal;
+	}
+
+	// accesor for numCardsInHand
+	public int getNumCardsInHand() {
+		return numCardsInHand;
+	}
+
+	// accessor for an individual card and returns a card with errorFlag = true if k is bad.
+	public Card inspectCard(int k) {
+		Card cardTest = null;
+		if (k>numCardsInHand-1)
+		{	cardTest=new Card();
+			cardTest.set('0', Card.Suit.clubs);
+		}
+		else
+			cardTest = new Card (myCards[k].getValue(),myCards[k].getSuit());
+		
+		return cardTest;
+
+	}
+}
+
+public class Card {
+
+	enum Suit {
+		clubs, diamonds, hearts, spades
+	}
+
+	private char value;
+	private Suit suit;
+	private boolean errorFlag;
+
+	// 3 constructors with no parameters, all parameters, and a copy constructor
+	// (with signature public Card(Card card))
+	public Card() {
+		this.value = 'A';
+		this.suit = Suit.spades;
+	}
+
+	public Card(char value, Suit suit) {
+		set(value, suit);
+	}
+
+	public Card(Card card) {
+		this.suit = card.suit;
+		this.value = card.value;
+	}
+
+	// mutator
+	public boolean set(char value, Suit suit) {
+		char upVal; // for upcasing char
+		errorFlag = false; // return value
+
+		this.suit = suit;
+
+		// convert to uppercase to simplify
+		upVal = Character.toUpperCase(value);
+
+		// check for validity
+		if (upVal == 'A' || upVal == 'K' || upVal == 'Q' || upVal == 'J' || upVal == 'T'
+				|| (upVal >= '2' && upVal <= '9')) {
+			this.value = upVal;
+		} else {
+			errorFlag = true;
+			return errorFlag;
+			
+		}
+		errorFlag = this.isValid(this.value, this.suit);
+		return errorFlag;
+	}
+
+	// accessors
+	public char getValue() {
+		return value;
+	}
+
+	public Suit getSuit() {
+		return suit;
+	}
+
+	public boolean isErrorFlag() {
+		return errorFlag;
+	}
+
+	// boolean equals(Card card) returns true if all the fields (members) are
+	// identical
+	public boolean equals(Card card) {
+		if (card.value == this.getValue() && card.suit == this.getSuit())
+			return true;
+		else
+			return false;
+	}
+
+	// stringizer
+	public String toString() {
+		String retVal;
+		String invalid = "*** illegal ***";
+
+		if (errorFlag == true)
+			return invalid;
+		retVal = String.valueOf(value) + " of " + suit;
+		return retVal;
+	}
+
+	// boolean static isValid(char value, Suit suit) -
+	// a static helper method that returns true or false, depending on the legality
+	// of the parameters.
+	static boolean isValid(char value, Suit suit) {
+		if (value == 'A' || value == 'K' || value == 'Q' || value == 'J' || value == 'T'
+				|| (value >= '2' && value <= '9'))
+			return false;
+		else
+			return true;
+	}
+}
