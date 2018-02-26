@@ -1,4 +1,4 @@
-Exercise: Assignment 2 - Adding a Deck
+﻿Exercise: Assignment 2 - Adding a Deck
 /** CS1B_Assignment_2_Group 10
  * Creeger, Adam/ Kishore, Nand/ Lo, YaFan
  */
@@ -311,11 +311,13 @@ public class Deck {
 	// Private Member Data
 	private Card[] cards;
 	private int topCard, numPacks, numCards;
+You all shouldn't have a numCards member variable in this class, just the topCard variable.
 
 	// Public Methods
 	// a constructor that populates the arrays and assigns initial values to
 	// members.
 	public Deck(int numPacks) {
+Validate to check that 1 <= numPacks <= MAX_PACKS
 		this.numPacks = numPacks;
 		cards = new Card[numPacks * NUM_CARDS_PER_PACK];
 		numCards = numPacks * NUM_CARDS_PER_PACK;
@@ -439,6 +441,7 @@ public class Deck {
 	 */
 	public boolean init(int numPacks) {
 		if (numPacks <= MAX_PACKS) {
+also make sure numPacks is >=1
 			cards = new Card[numPacks * NUM_CARDS_PER_PACK];
 			for (int i = 1; i <= numPacks; i++) {
 				for (int j = 0 + (i - 1) * NUM_CARDS_PER_PACK; j < i * NUM_CARDS_PER_PACK; j++)
@@ -450,6 +453,7 @@ public class Deck {
 			return true;
 		}
 
+You are using non-standard formatting here which can hide logic errors by making it hard to understand your work. Before you submit code, use Eclipse's defaults and choose "Format" from the "Source" menu.
 		else
 			return false;
 
@@ -483,6 +487,7 @@ public class Deck {
 
 	// An accessor for the int, topCard (no mutator.)
 	public int getTopCard() {
+The method getTopCard() should be called getNumCards() because otherwise it sounds like you are getting a Card object when you are really getting an int returned.
 		return topCard;
 	}
 
@@ -493,6 +498,7 @@ public class Deck {
 	public Card inspectCard(int k) {
 		Card cardTest = null;
 		if (k > topCard - 1) {
+make sure k is >= 0
 			cardTest = new Card();
 			cardTest.set('0', Card.Suit.clubs);
 		} else
@@ -583,6 +589,7 @@ public class Hand {
 
 	// accesor for numCardsInHand
 	public int getNumCardsInHand() {
+getNumCardsInHand method should be named getNumCards
 		return numCardsInHand;
 	}
 
@@ -590,6 +597,7 @@ public class Hand {
 	public Card inspectCard(int k) {
 		Card cardTest = null;
 		if (k>numCardsInHand-1)
+also make sure k is >= 0
 		{	cardTest=new Card();
 			cardTest.set('0', Card.Suit.clubs);
 		}
@@ -611,6 +619,7 @@ public class Card {
 	private Suit suit;
 	private boolean errorFlag;
 
+You are missing constants for the default value 'A' and default suit Card.Suit.spades. Declare a class constant (a static final) class member that holds your default value. That way your code is easier to maintain because you can change the default in one place and testing tools can inspect your code to find defaults.
 	// 3 constructors with no parameters, all parameters, and a copy constructor
 	// (with signature public Card(Card card))
 	public Card() {
@@ -627,6 +636,7 @@ public class Card {
 		this.value = card.value;
 	}
 
+It would good to have a public Card(char c) constructor
 	// mutator
 	public boolean set(char value, Suit suit) {
 		char upVal; // for upcasing char
@@ -639,15 +649,19 @@ public class Card {
 
 		// check for validity
 		if (upVal == 'A' || upVal == 'K' || upVal == 'Q' || upVal == 'J' || upVal == 'T'
+You all should use isValid here
 				|| (upVal >= '2' && upVal <= '9')) {
 			this.value = upVal;
 		} else {
 			errorFlag = true;
 			return errorFlag;
+should return !errorFlag
 			
 		}
 		errorFlag = this.isValid(this.value, this.suit);
+errorFlag should be set to !isValid(...)
 		return errorFlag;
+should return !errorFlag
 	}
 
 	// accessors
@@ -667,9 +681,12 @@ public class Card {
 	// identical
 	public boolean equals(Card card) {
 		if (card.value == this.getValue() && card.suit == this.getSuit())
+You were supposed to make sure that "boolean equals(Card card) - returns true if all the fields (members) are identical and false, otherwise." but you are not checking the errorFlag field.
 			return true;
+should be true
 		else
 			return false;
+should be false
 	}
 
 	// stringizer
