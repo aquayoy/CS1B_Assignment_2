@@ -15,8 +15,8 @@ public class Foothill {
 		System.out.println("---------------PHASE 1-----------------");
 		System.out.println("An unshffled deck containing two packs of cards:");
 		Deck deck = new Deck(2);
-		System.out.println("top Card = " + deck.getTopCard() + "\n\nDeal the cards:");
-		int totalCards = deck.getTopCard();
+		System.out.println("top Card = " + deck.getNumCards() + "\n\nDeal the cards:");
+		int totalCards = deck.getNumCards();
 		for (int i = 0; i < totalCards; i++)
 			System.out.println(deck.dealCard().toString());
 
@@ -24,13 +24,13 @@ public class Foothill {
 				"Next, reset the deck (2 packs) by initializing it again and shuffle the deck. Re-deal to the screen:");
 
 		Deck deckShuffled = new Deck(2);
-		System.out.println("top Card = " + deckShuffled.getTopCard());
+		System.out.println("top Card = " + deckShuffled.getNumCards());
 
 		//deckShuffled.init(2);
 		deckShuffled.shuffle();
 		Card shuffledCard;
 		String strShuffledCards = "";
-		for (int i = 0; i < deckShuffled.getTopCard(); i++) {
+		for (int i = 0; i < deckShuffled.getNumCards(); i++) {
 			shuffledCard = new Card(deckShuffled.inspectCard(i));
 			strShuffledCards = strShuffledCards + shuffledCard.toString() + " \n";
 		}
@@ -38,8 +38,8 @@ public class Foothill {
 
 		System.out.println("\n\nAn unshffled deck containing one pack of cards:");
 		Deck deck1 = new Deck();
-		totalCards = deck1.getTopCard();
-		System.out.println("top Card = " + deck1.getTopCard() + "\nDeal the cards:");
+		totalCards = deck1.getNumCards();
+		System.out.println("top Card = " + deck1.getNumCards() + "\nDeal the cards:");
 		for (int i = 0; i < totalCards; i++)
 			System.out.println(deck1.dealCard().toString());
 
@@ -47,13 +47,13 @@ public class Foothill {
 				"Next, reset the deck (one pack) by initializing it again and shuffle the deck. Re-deal to the screen:");
 
 		Deck deckShuffled1 = new Deck(1);
-		System.out.println("top Card = " + deckShuffled1.getTopCard());
+		System.out.println("top Card = " + deckShuffled1.getNumCards());
 
 		//deckShuffled1.init(1);
 		deckShuffled1.shuffle();
 		Card shuffledCard1;
 		String strShuffledCards1 = "";
-		for (int i = 0; i < deckShuffled.getTopCard(); i++) {
+		for (int i = 0; i < deckShuffled.getNumCards(); i++) {
 			shuffledCard1 = new Card(deckShuffled.inspectCard(i));
 			strShuffledCards1 = strShuffledCards1 + shuffledCard1.toString() + " \n";
 		}
@@ -79,8 +79,8 @@ public class Foothill {
 		deckOnePack.init(1);
 		System.out.println("card 3 = " + deckOnePack.inspectCard(2));
 
-		int topCard = deckOnePack.getTopCard();
-		System.out.println("The topCard = " + deckOnePack.getTopCard());
+		int topCard = deckOnePack.getNumCards();
+		System.out.println("The topCard = " + deckOnePack.getNumCards());
 
 		// deal a deck into that many Hand objects, dealing all cards until the deck is
 		// empty.
@@ -291,6 +291,8 @@ public class Foothill {
 		}
 
 		System.out.println("hand = ( " + cardsInHand10 + ")");
+		
+		
 
 	}
 

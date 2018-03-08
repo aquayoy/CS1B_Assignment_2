@@ -53,7 +53,7 @@ public class Card {
 			errorFlag = true;
 		}
 		// errorFlag = this.isValid(this.value, this.suit);
-		return errorFlag;
+		return !errorFlag;
 	}
 
 	// accessors

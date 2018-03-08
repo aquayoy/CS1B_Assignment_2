@@ -13,22 +13,27 @@ public class Deck {
 
 	// Private Member Data
 	private Card[] cards;
-	private int topCard, numPacks, numCards; 
-	static int counter=0;
+	private int topCard, numPacks, numCards; // > You all shouldn't have a numCards member variable
+	static int counter = 0;
 
 	// Public Methods
 	// a constructor that populates the arrays and assigns initial values to
 	// members.
 	public Deck(int numPacks) {
-		this.numPacks = numPacks;
+
+		// >Validate to check that 1 <= numPacks <= MAX_PACKS
+		if (1 <= numPacks && numPacks <= MAX_PACKS) {
+
+			this.numPacks = numPacks;
+		}
 		cards = new Card[numPacks * NUM_CARDS_PER_PACK];
 		numCards = numPacks * NUM_CARDS_PER_PACK;
 		topCard = numPacks * NUM_CARDS_PER_PACK;
 		for (int i = 1; i <= numPacks; i++)
 			Deck.allocateMasterPack();
-		
+
 		// call method init()
-					this.init(numPacks);
+		this.init(numPacks);
 
 	}
 
@@ -37,10 +42,10 @@ public class Deck {
 		cards = new Card[numPacks * NUM_CARDS_PER_PACK];
 		numCards = numPacks * NUM_CARDS_PER_PACK;
 		topCard = numPacks * NUM_CARDS_PER_PACK;
-		//for (int i = 1; i <= numPacks; i++)
-			Deck.allocateMasterPack();
+		// for (int i = 1; i <= numPacks; i++)
+		Deck.allocateMasterPack();
 		// call method init()
-			this.init(1);
+		this.init(1);
 	}
 
 	/*
@@ -50,11 +55,11 @@ public class Deck {
 	 */
 	private static void allocateMasterPack() {
 		// check if method allocateMasterPack() has been called before
-		if (counter>0)
+		if (counter > 0)
 			return;
 		// instantiate the array elements
 		masterPack = new Card[NUM_CARDS_PER_PACK];
-		
+
 		char val;
 		Card.Suit suit;
 		int k;
@@ -137,7 +142,7 @@ public class Deck {
 			}
 
 		}
-		
+
 		for (int a = 0; a < 52; a++) {
 			System.out.println(masterPack[a].toString());
 		}
@@ -151,7 +156,9 @@ public class Deck {
 	 * (init()) to the original full condition in preparation for a fresh deal
 	 */
 	public boolean init(int numPacks) {
-		if (numPacks <= MAX_PACKS) {
+		// >also make sure numPacks is >=1
+		if (numPacks >= 1 && numPacks <= MAX_PACKS) {
+
 			cards = new Card[numPacks * NUM_CARDS_PER_PACK];
 			for (int i = 1; i <= numPacks; i++) {
 				for (int j = 0 + (i - 1) * NUM_CARDS_PER_PACK; j < i * NUM_CARDS_PER_PACK; j++)
@@ -177,10 +184,10 @@ public class Deck {
 
 		Card cardDealt;
 		if (topCard > 0) {
-//			if ((topCard % 52 == 0))
-//				cards[topCard - 1] = new Card(masterPack[(NUM_CARDS_PER_PACK - 1)]);
-//			else
-//				cards[topCard - 1] = new Card(masterPack[(topCard % 52) - 1]);
+			// if ((topCard % 52 == 0))
+			// cards[topCard - 1] = new Card(masterPack[(NUM_CARDS_PER_PACK - 1)]);
+			// else
+			// cards[topCard - 1] = new Card(masterPack[(topCard % 52) - 1]);
 			cardDealt = cards[topCard - 1];
 			// String strCardDealt = cardDealt.toString();
 			// System.out.println(strCardDealt);
@@ -188,13 +195,20 @@ public class Deck {
 			return cardDealt;
 		} else
 			cardDealt = new Card('0', Card.Suit.clubs);
-		//boolean isIllegal = cardDealt.set('0', Card.Suit.clubs);
+		// boolean isIllegal = cardDealt.set('0', Card.Suit.clubs);
 		return cardDealt;
 	}
 
 	// An accessor for the int, topCard (no mutator.)
-	public int getTopCard() {
+	/*
+	 * The method getTopCard() should be called getNumCards() because otherwise it
+	 * sounds like you are getting a Card object when you are really getting an int
+	 * returned.
+	 */
+	public int getNumCards() {
+
 		return topCard;
+
 	}
 
 	/*
